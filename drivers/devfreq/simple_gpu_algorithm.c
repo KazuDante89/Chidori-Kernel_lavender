@@ -84,4 +84,7 @@ module_exit(simple_gpu_exit);
 MODULE_AUTHOR("Paul Reioux <reioux@gmail.com>");
 MODULE_DESCRIPTION("'simple_gpu_algorithm - A Simple user configurable GPU"
 	"Control Algorithm for Adreno GPU series");
+
+MODULE_LICENSE("GPL");
+
 MODULE_LICENSE("GPL");

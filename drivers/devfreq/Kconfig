@@ -85,7 +85,7 @@ config SIMPLE_GPU_ALGORITHM
 	depends on DEVFREQ_GOV_MSM_ADRENO_TZ
 	help
 	  Simple user configurable GPU controlling algorithm
-	  
+
 config QCOM_BIMC_BWMON
 	tristate "QCOM BIMC Bandwidth monitor hardware"
 	depends on ARCH_QCOM
