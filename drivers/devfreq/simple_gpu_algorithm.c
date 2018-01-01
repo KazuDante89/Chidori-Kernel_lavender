@@ -18,7 +18,6 @@
 #include <linux/module.h>
 #include <linux/devfreq.h>
 #include <linux/msm_adreno_devfreq.h>
-#include <linux/io.h>
 
 static int default_laziness = 4;
 module_param_named(simple_laziness, default_laziness, int, 0664);
@@ -26,7 +25,7 @@ module_param_named(simple_laziness, default_laziness, int, 0664);
 static int ramp_up_threshold = 5000;
 module_param_named(simple_ramp_threshold, ramp_up_threshold, int, 0664);
 
-int simple_gpu_active = 1;
+int simple_gpu_active = 0;
 module_param_named(simple_gpu_activate, simple_gpu_active, int, 0664);
 
 static int laziness;
@@ -35,9 +34,6 @@ int simple_gpu_algorithm(int level, int *val,
 			struct devfreq_msm_adreno_tz_data *priv)
 {
 	int ret;
-
-	/* sync memory before sending the commands */
-	__iowmb();
 
 	/* it's currently busy */
 	if (priv->bin.busy_time > ramp_up_threshold) {
@@ -88,7 +84,4 @@ module_exit(simple_gpu_exit);
 MODULE_AUTHOR("Paul Reioux <reioux@gmail.com>");
 MODULE_DESCRIPTION("'simple_gpu_algorithm - A Simple user configurable GPU"
 	"Control Algorithm for Adreno GPU series");
-
-MODULE_LICENSE("GPL");
-
 MODULE_LICENSE("GPL");
