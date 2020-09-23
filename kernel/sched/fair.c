@@ -729,7 +729,7 @@ void init_entity_runnable_average(struct sched_entity *se)
 {
 	struct sched_avg *sa = &se->avg;
 
-	memset(sa, 0, sizeof(*sa));
+ 	memset(sa, 0, sizeof(*sa));
 	/*
 	 * util_avg is initialized in post_init_entity_util_avg.
 	 * util_est should start from zero.
