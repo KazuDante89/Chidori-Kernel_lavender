@@ -30,8 +30,6 @@ unsigned long boosted_cpu_util(int cpu);
 #define cpufreq_disable_fast_switch(x)
 #define LATENCY_MULTIPLIER	    (1000)
 #define SUGOV_KTHREAD_PRIORITY	50
-#define UP_RATE_LIMIT_US 500
-#define DOWN_RATE_LIMIT_US 10000
 
 struct sugov_tunables {
 	struct gov_attr_set attr_set;
@@ -700,8 +698,8 @@ static int sugov_init(struct cpufreq_policy *policy)
 		goto stop_kthread;
 	}
 
-	tunables->up_rate_limit_us = LATENCY_MULTIPLIER;
-	tunables->down_rate_limit_us = LATENCY_MULTIPLIER;
+	tunables->up_rate_limit_us = LATENCY_MULTIPLIER / 1;
+	tunables->down_rate_limit_us = LATENCY_MULTIPLIER * 4;
 	lat = policy->cpuinfo.transition_latency / NSEC_PER_USEC;
 	if (lat) {
 		tunables->up_rate_limit_us *= lat;
