@@ -779,7 +779,7 @@ static int smb1351_float_voltage_set(struct smb1351_charger *chip,
 	u8 temp;
 
 	if ((vfloat_mv < MIN_FLOAT_MV) || (vfloat_mv > MAX_FLOAT_MV)) {
-		pr_err("bad float voltage mv =%d asked to set\n", vfloat_mv);
+		pr_debug("bad float voltage mv =%d asked to set\n", vfloat_mv);
 		return -EINVAL;
 	}
 
@@ -1523,6 +1523,17 @@ static int smb1351_parallel_set_chg_suspend(struct smb1351_charger *chip,
 		}
 		chip->parallel_charger_suspended = false;
 	} else {
+		smb1351_enable_volatile_writes(chip);
+		/* control USB suspend via command bits */
+		rc = smb1351_masked_write(chip, VARIOUS_FUNC_REG,
+					APSD_EN_BIT | SUSPEND_MODE_CTRL_BIT,
+						SUSPEND_MODE_CTRL_BY_I2C);
+		if (rc) {
+			pr_debug("Couldn't set USB suspend rc=%d\n", rc);
+			return rc;
+		}
+
+
 		rc = smb1351_usb_suspend(chip, CURRENT, true);
 		if (rc)
 			pr_debug("failed to suspend rc=%d\n", rc);
@@ -3184,6 +3195,11 @@ static int smb1351_parallel_charger_probe(struct i2c_client *client,
 	chip->dev = &client->dev;
 	chip->parallel_charger = true;
 	chip->parallel_charger_suspended = true;
+	if (hwc_check_global)
+	{
+		pr_debug("Global hasn't smb1350 ragulator,return\n");
+		return -ENODEV;
+	}
 
 	chip->usb_suspended_status = of_property_read_bool(node,
 					"qcom,charging-disabled");
