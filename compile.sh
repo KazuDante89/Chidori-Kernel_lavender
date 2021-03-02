@@ -1,6 +1,7 @@
 #!/bin/bash
 export KBUILD_BUILD_USER=Arieffst
 export KBUILD_BUILD_HOST=#fstprjct
+export PATH="$root/proton-clang/bin:$PATH"
 # Compile plox
 function compile() {
     make -j$(nproc) O=out ARCH=arm64 lavender-perf_defconfig CC=clang
