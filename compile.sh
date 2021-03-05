@@ -1,6 +1,6 @@
 #!/bin/bash
 export KBUILD_BUILD_USER=Arieffst
-export KBUILD_BUILD_HOST=#fstprjct
+export KBUILD_BUILD_HOST=Fstprjkt
 # Compile plox
 function compile() {
     make -j$(nproc) O=out ARCH=arm64 lavender-perf_defconfig
