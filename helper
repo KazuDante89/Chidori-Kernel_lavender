@@ -100,7 +100,7 @@ gen_toolchain(){
 		git clone --depth=1 https://github.com/mvaisakh/gcc-arm64  -b gcc-master gcc
 		git clone --depth=1 https://github.com/mvaisakh/gcc-arm -b gcc-master gcc+
 	fi
-	git clone --depth=1 https://github.com/Arieffst/AnyKernel3.1 -b phoenix anykernel
+	git clone --depth=1 https://github.com/Arieffst/AnyKernel3 -b phoenix anykernel
 }
 
 build(){
