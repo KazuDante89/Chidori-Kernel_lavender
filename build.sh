@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export KERNELNAME=Phoenix Eas
+export KERNELNAME=Phoenix
 
 export LOCALVERSION=S1.3
 
