@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export KERNELNAME=Phoenix
+export KERNELNAME=Phoenix Eas
 
 export LOCALVERSION=S1.3
 
@@ -16,20 +16,15 @@ source helper
 
 gen_toolchain
 
-send_msg "⏳ Memulai build kernel ${DEVICES}..."
+send_msg "⏳ Start building ${KERNELNAME} ${LOCALVERSION} ${DEVICES}..."
 
 START=$(date +"%s")
 
 for i in ${DEVICES//,/ }
-do 
+do
 
 	build ${i} -kernel
 
 done
 
-DATE_END=$(date +"%s")
- 
-DIFF=$(($DATE_END - $DATE_START))
-
-echo "Time: $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) seconds."
-echo
+DIFF=$(( END - START ))
