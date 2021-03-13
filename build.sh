@@ -28,4 +28,8 @@ do
 
 done
 
+END=$(date +"%s")
+
 DIFF=$(( END - START ))
+
+send_msg "✅ Build completed in $((DIFF / 60))m $((DIFF % 60))s | Linux version: $(make kernelversion) | Last commit: $(git log --pretty=format:'%s' -5)"
