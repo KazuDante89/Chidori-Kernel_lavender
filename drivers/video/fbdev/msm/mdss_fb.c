@@ -49,6 +49,7 @@
 #include <linux/mdss_io_util.h>
 #include <linux/wakelock.h>
 #include <linux/devfreq_boost.h>
+#include <linux/pm_qos.h>
 #include <sync.h>
 #include <sw_sync.h>
 
