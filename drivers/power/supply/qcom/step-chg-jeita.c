@@ -311,18 +311,6 @@ static int handle_jeita(struct step_chg_info *chip)
 	int rc = 0, fcc_ua = 0, fv_uv = 0;
 	u64 elapsed_us;
 
-#if defined(CONFIG_KERNEL_CUSTOM_D2S)
-	if (hwc_check_india) {
-		pr_debug("lct video LctIsInVideo=%d, lct_therm_lvl_reserved=%d\n",
-					LctIsInVideo, lct_therm_lvl_reserved.intval);
-	    if (LctIsInVideo== 1)
-			rc = power_supply_set_property(chip->batt_psy,
-			POWER_SUPPLY_PROP_SYSTEM_TEMP_LEVEL, &lct_therm_video_level);
-		else
-			rc = power_supply_set_property(chip->batt_psy,
-			POWER_SUPPLY_PROP_SYSTEM_TEMP_LEVEL, &lct_therm_lvl_reserved);
-	}
-#endif
 	rc = power_supply_get_property(chip->batt_psy,
 		POWER_SUPPLY_PROP_SW_JEITA_ENABLED, &pval);
 	if (rc < 0)
@@ -389,7 +377,7 @@ static int handle_jeita(struct step_chg_info *chip)
 	vote(chip->fv_votable, JEITA_VOTER, true, fv_uv);
 
 	pr_debug("%s = %d FCC = %duA FV = %duV\n",
-		jeita_fv_config.prop_name, pval.intval, fcc_ua, fv_uv);
+		step_chg_config.prop_name, pval.intval, fcc_ua, fv_uv);
 
 update_time:
 	chip->jeita_last_update_time = ktime_get();
