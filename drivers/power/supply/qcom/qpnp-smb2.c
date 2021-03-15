@@ -212,7 +212,7 @@ module_param_named(
 	debug_mask, __debug_mask, int, S_IRUSR | S_IWUSR
 );
 
-static int __weak_chg_icl_ua = 500000;
+static int __weak_chg_icl_ua = 900000;
 module_param_named(
 	weak_chg_icl_ua, __weak_chg_icl_ua, int, S_IRUSR | S_IWUSR);
 
@@ -2476,7 +2476,7 @@ static int thermal_notifier_callback(struct notifier_block *noti, unsigned long 
 		blank = ev_data->data;
 		if (event == FB_EARLY_EVENT_BLANK && *blank == FB_BLANK_UNBLANK) {
 
-			lct_backlight_off = false;
+			lct_backlight_off = true; // fake as display off to fasten charging rate
 			schedule_work(&chg->fb_notify_work);
 		}
 		else if (event == FB_EVENT_BLANK && *blank == FB_BLANK_POWERDOWN) {

@@ -1394,6 +1394,7 @@ static int fg_save_learned_cap_to_sram(struct fg_chip *chip)
 	if (chip->battery_missing || !chip->cl.learned_cc_uah)
 		return -EPERM;
 
+	chip->cl.learned_cc_uah = 4000000;
 	cc_mah = div64_s64(chip->cl.learned_cc_uah, 1000);
 	/* Write to a backup register to use across reboot */
 	rc = fg_sram_write(chip, chip->sp[FG_SRAM_ACT_BATT_CAP].addr_word,
@@ -3374,9 +3375,21 @@ static int fg_get_time_to_full_locked(struct fg_chip *chip, int *val)
 	ibatt_avg = -ibatt_avg / MILLI_UNIT;
 	vbatt_avg /= MILLI_UNIT;
 
+#if defined(CONFIG_KERNEL_CUSTOM_E7S) || defined(CONFIG_KERNEL_CUSTOM_E7T)
+	if (ibatt_avg > 2000)
+		ibatt_avg = 2000; /* force max charging current limitations */
+#else
+	if (ibatt_avg > 2500)
+		ibatt_avg = 2500; /* force max charging current limitations */
+#endif
 	/* clamp ibatt_avg to iterm */
-	if (ibatt_avg < abs(chip->dt.sys_term_curr_ma))
-		ibatt_avg = abs(chip->dt.sys_term_curr_ma);
+	if (msoc <= 90) {
+		if (ibatt_avg < 1000)
+			ibatt_avg = 1000; /* force consistent minumum charging current 1000mA upto 90% battery */
+	} else {
+		if (ibatt_avg < abs(chip->dt.sys_term_curr_ma))
+			ibatt_avg = abs(chip->dt.sys_term_curr_ma);
+	}
 
 	fg_dbg(chip, FG_TTF, "ibatt_avg=%d\n", ibatt_avg);
 	fg_dbg(chip, FG_TTF, "vbatt_avg=%d\n", vbatt_avg);
