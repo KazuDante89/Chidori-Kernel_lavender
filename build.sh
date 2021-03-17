@@ -6,7 +6,7 @@ export LOCALVERSION=S1.4
 
 export KBUILD_BUILD_USER=Arieffst
 
-export KBUILD_BUILD_HOST=#FunProject
+export KBUILD_BUILD_HOST=droneci
 
 export TOOLCHAIN=clang
 
