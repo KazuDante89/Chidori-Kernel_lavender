@@ -18,7 +18,6 @@
 *.so
 *.so.dbg
 *.mod.c
-*.i
 *.lst
 *.symtypes
 *.order
@@ -38,6 +37,7 @@ modules.builtin
 Module.symvers
 *.dwo
 *.su
+*.c.[012]*.*
 
 #
 # Top-level generic files
@@ -63,10 +63,11 @@ Module.symvers
 /tar-install/
 
 #
-# git files that we don't want to ignore even it they are dot-files
+# git files that we don't want to ignore even if they are dot-files
 #
 !.gitignore
 !.mailmap
+!.cocciconfig
 
 #
 # Generated include files
@@ -115,9 +116,17 @@ all.config
 *.kdev4
 
 # fetched Android config fragments
-android/configs/android-*.cfg
+kernel/configs/android-*.cfg
 
 #
 #Ignoring Android.bp link file
 #
 Android.bp
+
+/out/
+/libufdt/
+/AnyKernel3/
+/stock_32/
+/stock/
+/clang/
+
