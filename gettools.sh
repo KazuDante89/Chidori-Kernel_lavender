@@ -9,6 +9,11 @@ sudo apt install bc bash git-core gnupg build-essential \
     zip curl make automake autogen autoconf autotools-dev libtool shtool python \
     m4 gcc libtool zlib1g-dev flex bison libssl-dev
 
+rm -rf stock_32
+rm -rf stock
+rm -rf libufdt
+rm -rf AnyKernel3
+
 # Clone toolchain
 git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 -b android-11.0.0_r33 --depth=1 stock
 git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9 -b android-11.0.0_r33 --depth=1 stock_32
