@@ -3,7 +3,7 @@ echo "Cloning dependencies"
 git clone --depth=1 https://github.com/sohamxda7/llvm-stable  clang
 git clone https://github.com/sohamxda7/llvm-stable -b gcc64 --depth=1 gcc
 git clone https://github.com/sohamxda7/llvm-stable -b gcc32  --depth=1 gcc32
-git clone --depth=1 https://github.com/sohamxda7/AnyKernel3 AnyKernel
+git clone --depth=1 https://github.com/KazuDante89/AnyKernel3-EAS -b lavender2 AnyKernel
 echo "Done"
 IMAGE=$(pwd)/out/arch/arm64/boot/Image.gz-dtb
 TANGGAL=$(date +"%F-%S")
@@ -26,7 +26,7 @@ function sendinfo() {
         -d chat_id="$chat_id" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="<b>• Predator-Stormbreaker Kernel •</b>%0ABuild started on <code>Circle CI</code>%0AFor device <b>Xiaomi Redmi Note7/7S</b> (lavender)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
+        -d text="<b>• Testing Chidori Kernel •</b>%0ABuild started on <code>Circle CI</code>%0AFor device <b>Xiaomi Redmi Note7/7S</b> (lavender)%0Abranch <code>$(git rev-parse --abbrev-ref HEAD)</code>(master)%0AUnder commit <code>$(git log --pretty=format:'"%h : %s"' -1)</code>%0AUsing compiler: <code>${KBUILD_COMPILER_STRING}</code>%0AStarted on <code>$(date)</code>%0A<b>Build Status:</b>#Stable"
 }
 # Push kernel to channel
 function push() {
@@ -49,7 +49,7 @@ function finerr() {
 }
 # Compile plox
 function compile() {
-    make O=out ARCH=arm64 lavender-perf_defconfig
+    make O=out ARCH=arm64 lavender-oldcam_defconfig
     make -j$(nproc --all) O=out \
                     ARCH=arm64 \
                     CC=clang \
@@ -66,7 +66,7 @@ function compile() {
 # Zipping
 function zipping() {
     cd AnyKernel || exit 1
-    zip -r9 Predator-Stormbreaker-lavender-${TANGGAL}.zip *
+    zip -r9 Test_v0.0.zip *
     cd ..
 }
 sticker
@@ -76,4 +76,3 @@ zipping
 END=$(date +"%s")
 DIFF=$(($END - $START))
 push
-

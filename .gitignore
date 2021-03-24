@@ -67,6 +67,7 @@ Module.symvers
 #
 !.gitignore
 !.mailmap
+!.circleci
 !.cocciconfig
 
 #
@@ -129,4 +130,3 @@ Android.bp
 /stock_32/
 /stock/
 /clang/
-
